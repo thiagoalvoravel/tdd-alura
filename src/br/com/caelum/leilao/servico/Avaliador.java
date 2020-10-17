@@ -36,6 +36,10 @@ public class Avaliador {
 			}
 		}
 		
+		obtemOsTresMaioresLances(leilao);
+	}
+	
+	private void obtemOsTresMaioresLances(Leilao leilao) {
 		maiores = new ArrayList<Lance>(leilao.getLances());
 		
 		Collections.sort(maiores, new Comparator<Lance>() {
@@ -47,7 +51,6 @@ public class Avaliador {
 		});
 		
 		maiores = maiores.subList(0, maiores.size() > 3 ? 3 : maiores.size());
-		
 	}
 	
 }
