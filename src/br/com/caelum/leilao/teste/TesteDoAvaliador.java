@@ -89,7 +89,33 @@ public class TesteDoAvaliador {
 		assertEquals(750.0, tresMaiores.get(0).getValor(), 0.00001);
 		assertEquals(500.0, tresMaiores.get(1).getValor(), 0.00001);
 		assertEquals(400.0, tresMaiores.get(2).getValor(), 0.00001);
+	}
+	
+	@Test
+	public void deveEntenderLeilaoEmOrdemAleatoria() {
+		//cenário
+		Usuario joao = new Usuario("João");
+		Usuario maria = new Usuario("Maria");
 		
+		Leilao leilao = new Leilao("PS3 Novo");
+		
+		leilao.propoe(new Lance(maria, 300.0));
+		leilao.propoe(new Lance(joao, 250.0));
+		leilao.propoe(new Lance(joao, 1250.0));
+		leilao.propoe(new Lance(joao, 250.0));
+		leilao.propoe(new Lance(maria, 3300.0));
+		leilao.propoe(new Lance(maria, 2300.0));
+		
+		double maiorEsperado = 3300;
+		double menorEsperado = 250;
+		
+		//ação
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		//validação
+		assertEquals(maiorEsperado, leiloeiro.getMaiorDeTodos(), 0.00001);
+		assertEquals(menorEsperado, leiloeiro.getMenorDeTodos(), 0.00001);
 	}
 	
 }
