@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -118,20 +119,6 @@ public class TesteDoAvaliador {
 	}
 	
 	@Test
-	public void deveDevolverListaVaziaCasoNaoHajaLance() {
-		//cenário
-		Leilao leilao = new Leilao("PS3 Novo");
-
-		//ação
-		leiloeiro.avalia(leilao);
-		
-		List<Lance> tresMaiores = leiloeiro.getTresMaiores();
-		
-		//validação
-		assertEquals(0, tresMaiores.size());
-	}
-	
-	@Test
     public void deveDevolverTodosLancesCasoNaoHajaNoMinimoTres() {
 		//cenário
 		Leilao leilao = new CriadorDeLeilao().para("PS3 Novo")
@@ -149,6 +136,11 @@ public class TesteDoAvaliador {
         assertEquals(maiores.get(0).getValor(), leiloeiro.getMaiorDeTodos(), 0.00001);
         assertEquals(maiores.get(1).getValor(), leiloeiro.getMenorDeTodos(), 0.00001);
     }
-
+	
+	@Test(expected = RuntimeException.class)
+	public void naoDeveAvaliarLeilaoSemLance() {
+		Leilao leilao = new CriadorDeLeilao().para("PS3 Novo").constroi();
+		leiloeiro.avalia(leilao);
+	}
 	
 }
