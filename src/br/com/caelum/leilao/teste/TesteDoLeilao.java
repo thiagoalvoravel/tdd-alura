@@ -73,5 +73,35 @@ public class TesteDoLeilao {
 		assertEquals(11000.0, leilao.getLances().get(leilao.getLances().size() - 1).getValor(), 0.00001);
 		
 	}
+	
+	@Test
+	public void deveDobrarLance() {
+		Leilao leilao = new Leilao("MacBook Air");
+		Usuario pedro = new Usuario("Pedro");
+		Usuario maria = new Usuario("Maria");
+		
+		leilao.propoe(new Lance(pedro, 2000));
+		leilao.propoe(new Lance(maria, 3000));
+		leilao.dobrarLanceUsuario(pedro);
+		
+		assertEquals(3, leilao.getLances().size());
+		assertEquals(4000.0, leilao.getLances().get(leilao.getLances().size() - 1).getValor(), 0.00001);
+	}
+	
+	@Test
+	public void naoDeveDobrarLanceCasoNaoHajaLance() {
+		Leilao leilao = new Leilao("MacBook Air");
+		Usuario pedro = new Usuario("Pedro");
+		Usuario maria = new Usuario("Maria");
+		Usuario paulo = new Usuario("Paulo");
+		
+		
+		leilao.propoe(new Lance(pedro, 2000));
+		leilao.propoe(new Lance(maria, 3000));
+		leilao.dobrarLanceUsuario(paulo);
+		
+		assertEquals(2, leilao.getLances().size());
+		assertEquals(3000.0, leilao.getLances().get(leilao.getLances().size() - 1).getValor(), 0.00001);
+	}
 		
 }
